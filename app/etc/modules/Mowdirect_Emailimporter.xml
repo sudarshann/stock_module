@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+      <Mowdirect_Importer>
+         <active>true</active>
+         <codePool>local</codePool>
+      </Mowdirect_Importer>
+    </modules>
+</config>

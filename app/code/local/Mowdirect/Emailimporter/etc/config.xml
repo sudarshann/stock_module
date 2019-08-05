@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Mowdirect_Emailimporter>
+      <version>0.1.0</version>
+    </Mowdirect_Emailimporter>
+  </modules>
+  <frontend>
+    <routers>
+      <email_importer>
+        <use>standard</use>
+        <args>
+          <module>Mowdirect_Emailimporter</module>
+          <frontName>email_importer</frontName>
+        </args>
+      </email_importer>
+    </routers>
+  </frontend>
+<admin>
+  <routers>
+    <email_importer>
+     <use>admin</use>
+     <args>
+      <module>Mowdirect_Emailimporter</module>
+      <frontName>admin_email_importer</frontName>
+     </args>
+    </email_importer>
+  </routers>
+</admin>
+</config>
