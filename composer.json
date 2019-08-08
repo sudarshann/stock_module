@@ -1,0 +1,8 @@
+{
+	"config": {
+		"vendor-dir": "lib/google-client-api"
+	},
+	"require": {
+        	"google/apiclient": "^2.2"
+    	}
+}
