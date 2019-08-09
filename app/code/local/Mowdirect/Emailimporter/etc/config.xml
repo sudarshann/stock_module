@@ -1,198 +1,165 @@
 <?xml version="1.0"?>
 <config>
-  <modules>
-    <Mowdirect_Emailimporter>
-      <version>0.1.0</version>
-    </Mowdirect_Emailimporter>
-  </modules>
+    <modules>
+        <Mowdirect_Emailimporter>
+            <version>0.1.0</version>
+        </Mowdirect_Emailimporter>
+    </modules>
 
-  <global>
-    <helpers>
-        <emailimporter>
-            <class>Mowdirect_Emailimporter_Helper</class>
-        </emailimporter>
-    </helpers> 
-
-    <models>
-        <emailimporter>
-            <class>Mowdirect_Emailimporter_Model</class>
-        </emailimporter>
-    </models>
-
-    <udropship>
-      <vendor>
-        <fieldsets>
-          <email_stock_importer>
-              <legend>Email Stock Importer</legend>
-              <position>05</position>
-          </email_stock_importer>
-        </fieldsets>
-        <fields>
-          <import_email_id>
-              <label>Importer Email Id</label>
-              <type>text</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>1</position>
-              <note><![CDATA[Enter email which receives import inventory]]></note>
-          </import_email_id>
-
-          <email_password>
-              <label>Email Password</label>
-              <type>text</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>2</position>
-              <note><![CDATA[Enter email password which receives import inventory]]></note>
-          </email_password>
-
-          <allowed_misses>
-              <label>Allowed Misses Email</label>
-              <type>text</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>3</position>
-              <note><![CDATA[Enter number of allowed miss from email]]></note>
-          </allowed_misses>
-
-          <missed_total_email>
-              <label>Missed Total Email</label>
-              <type>text</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>4</position>
-              <note><![CDATA[Total count of email total]]></note>
-          </missed_total_email>
-
-          <email_recipient>
-              <label>Email Recipient To Alert Miss</label>
-              <type>text</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>5</position>
-              <note><![CDATA[Enter Email Recipient to alert him that we have missed email]]></note>
-          </email_recipient>
-
-          <allowed_miss_per_vender>
-              <label>How many failures are allowed for this vendor ?</label>
-              <type>text</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>6</position>
-          </allowed_miss_per_vender>
-
-          <allowed_miss_per_vender>
-              <label>How many failures are allowed for this vendor ?</label>
-              <type>text</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>6</position>
-          </allowed_miss_per_vender>
-
-          <gmail_importer_refresh_token>
-              <label>Gmail Importer Refresh Token</label>
-              <type>text</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>7</position>
-          </gmail_importer_refresh_token>
-
-          <gmail_importer_access_token>
-              <label>Gmail Importer Access Token</label>
-              <type>textarea</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>8</position>
-          </gmail_importer_access_token>
-
-          <import_inventory_csv_regex>
-              <label>Import Inventory CSV file subject line regex</label>
-              <type>text</type>
-              <fieldset>email_stock_importer</fieldset>
-              <position>80</position>
-          </import_inventory_csv_regex>
-
-        </fields>
-      </vendor>
-    </udropship>
-
-    <events>
-      <emailimporter_notifications_before>
-        <observers>
-          <emailimporter_observer>
-            <type>singleton</type>
-            <class>Mowdirect_Emailimporter_Model_Observer</class>
-            <method>checkMessages</method>
-          </emailimporter_observer>
-        </observers>
-      </emailimporter_notifications_before>
-    </events>
-
-    <adminhtml>
-      <layout>
-        <updates>
+    <global>
+        <helpers>
             <emailimporter>
-                <file>mowdirect/emailimporter.xml</file>
+                <class>Mowdirect_Emailimporter_Helper</class>
             </emailimporter>
-        </updates>
-      </layout>
-    </adminhtml>
+        </helpers> 
 
-  </global>
+        <models>
+            <emailimporter>
+                <class>Mowdirect_Emailimporter_Model</class>
+            </emailimporter>
+        </models>
 
-  <crontab>
+        <udropship>
+            <vendor>
+                <fieldsets>
+                    <email_stock_importer>
+                        <legend>Email Stock Importer</legend>
+                        <position>05</position>
+                    </email_stock_importer>
+                </fieldsets>
+                <fields>
+                    <import_email_id>
+                        <label>Importer Email Id</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>1</position>
+                        <note><![CDATA[Enter email which receives import inventory]]></note>
+                    </import_email_id>
+
+                    <email_password>
+                        <label>Email Password</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>2</position>
+                        <note><![CDATA[Enter email password which receives import inventory]]></note>
+                    </email_password>
+
+                    <email_recipient>
+                        <label>Email Recipient To Alert Miss</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>5</position>
+                        <note><![CDATA[Enter Email Recipient to alert him that we have missed email]]></note>
+                    </email_recipient>
+
+                    <allowed_miss_per_vender>
+                        <label>How many failures are allowed for this vendor ?</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>6</position>
+                    </allowed_miss_per_vender>
+
+                    <allowed_miss_per_vender>
+                        <label>How many failures are allowed for this vendor ?</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>6</position>
+                    </allowed_miss_per_vender>
+
+                    <gmail_importer_access_token>
+                        <label>Gmail Importer Access Token</label>
+                        <type>textarea</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>8</position>
+                    </gmail_importer_access_token>
+
+                    <gmail_import_last_downloaded>
+                        <label>Gmail Import Last Downloaded</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>9</position>
+                    </gmail_import_last_downloaded>
+
+                    <import_inventory_csv_regex>
+                        <label>Import Inventory CSV file subject line regex</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>80</position>
+                    </import_inventory_csv_regex>
+
+                </fields>
+            </vendor>
+        </udropship>
+
+        <events>
+            <emailimporter_notifications_before>
+                <observers>
+                    <emailimporter_observer>
+                        <type>singleton</type>
+                        <class>Mowdirect_Emailimporter_Model_Observer</class>
+                        <method>checkMessages</method>
+                    </emailimporter_observer>
+                </observers>
+            </emailimporter_notifications_before>
+        </events>
+    </global>
+
+    <crontab>
         <jobs>
             <mowdirect_emailimportercron>
-                <schedule><cron_expr>* * * * *</cron_expr></schedule>
-                <run><model>emailimporter/observer::handleCron</model></run>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>emailimporter/observer::handleCron</model>
+                </run>
             </mowdirect_emailimportercron>
-        </jobs>
-        <events>
-            <default>
-                <observers>
-                    <udropship_helper>
-                        <class>emailimporter/observer</class>
-                        <method>beforeCrontab</method>
-                    </udropship_helper>
-                </observers>
-            </default>
-        </events>
-  </crontab>
+        </jobs>        
+    </crontab>
 
-  <adminhtml>
-    <acl>
-        <resources>
-            <admin>
-                <children>
-                    <system>
-                        <children>
-                            <config>
-                                <children>
-                                    <emailimporter>
-                                        <title>Store email importer Module Section</title>
-                                    </emailimporter>
-                                </children>
-                            </config>
-                        </children>
-                    </system>
-                </children>
-            </admin>
-        </resources>
-    </acl>
-  </adminhtml>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <emailimporter>
+                                            <title>Store email importer Module Section</title>
+                                        </emailimporter>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
     
-  <frontend>
-    <routers>
-      <email_importer>
-        <use>standard</use>
-        <args>
-          <module>Mowdirect_Emailimporter</module>
-          <frontName>email_importer</frontName>
-        </args>
-      </email_importer>
-    </routers>
-  </frontend>
+    <frontend>
+        <routers>
+            <email_importer>
+                <use>standard</use>
+                <args>
+                    <module>Mowdirect_Emailimporter</module>
+                    <frontName>email_importer</frontName>
+                </args>
+            </email_importer>
+        </routers>
+    </frontend>
 
-  <admin>
-    <routers>
-      <email_importer_gmail_auth>
-        <use></use>
-        <args>
-          <module>Mowdirect_Emailimporter_Adminhtml</module>
-          <frontName>email_importer_gmail_auth</frontName>
-        </args>
-      </email_importer_gmail_auth>
-    </routers>
-  </admin>
+    <admin>
+        <routers>
+            <email_importer_admin>
+                <use>admin</use>
+                <args>
+                    <module>Mowdirect_Emailimporter</module>
+                    <frontName>email_importer_gmail_auth</frontName>
+                </args>
+            </email_importer_admin>
+        </routers>
+    </admin>
 </config>
