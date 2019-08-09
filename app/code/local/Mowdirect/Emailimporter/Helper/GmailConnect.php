@@ -129,15 +129,11 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
     }
 
     public function download_csv_files_from_message($args = []) {
-
-        $is_file_downloaded = false;
-
-        $result = array();
+		$result = array();
         $response = array('email_found' => 0, 'has_attachment' => false);
         $hit_mail_count = 0;
         $download_path = $this->download_path;
-        $log_file = 'cronReport-email-importer.log';
-
+		
         if (!empty($args['download_path']) && is_dir($args['download_path'])) {
             $download_path = $args['download_path'];
         }
@@ -176,7 +172,8 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
             }
 
             $parts = $message->getPayload()->getParts();
-
+			$file_path = '';
+			
             foreach ($parts as $part) {
 
                 if (empty($part->getBody()->getAttachmentId())) {
@@ -204,7 +201,11 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
                 if ('text/plain' == finfo_buffer($f, $csvdata, FILEINFO_MIME_TYPE)) {
                     $file_path = $download_path . '/' . $part->filename;
                     $file = fopen($file_path, "w+");
-                    fwrite($file, $csvdata);
+					if ( !$fp ) {
+						continue;
+					}  
+                    
+					fwrite($file, $csvdata);
                     fclose($file);
 
                     $this->deleteMessage($message_id);
