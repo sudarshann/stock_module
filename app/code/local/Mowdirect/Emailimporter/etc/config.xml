@@ -28,57 +28,36 @@
                     </email_stock_importer>
                 </fieldsets>
                 <fields>
-                    <import_email_id>
-                        <label>Importer Email Id</label>
-                        <type>text</type>
-                        <fieldset>email_stock_importer</fieldset>
-                        <position>1</position>
-                        <note><![CDATA[Enter email which receives import inventory]]></note>
-                    </import_email_id>
-
-                    <email_password>
-                        <label>Email Password</label>
-                        <type>text</type>
-                        <fieldset>email_stock_importer</fieldset>
-                        <position>2</position>
-                        <note><![CDATA[Enter email password which receives import inventory]]></note>
-                    </email_password>
 
                     <email_recipient>
-                        <label>Email Recipient To Alert Miss</label>
+                        <label>Email Recipient To Alert Mis</label>
                         <type>text</type>
                         <fieldset>email_stock_importer</fieldset>
                         <position>5</position>
                         <note><![CDATA[Enter Email Recipient to alert him that we have missed email]]></note>
                     </email_recipient>
 
-                    <allowed_miss_per_vender>
+                    <allowed_mis_per_vender>
                         <label>How many failures are allowed for this vendor ?</label>
                         <type>text</type>
                         <fieldset>email_stock_importer</fieldset>
                         <position>6</position>
-                    </allowed_miss_per_vender>
-
-                    <allowed_miss_per_vender>
-                        <label>How many failures are allowed for this vendor ?</label>
-                        <type>text</type>
-                        <fieldset>email_stock_importer</fieldset>
-                        <position>6</position>
-                    </allowed_miss_per_vender>
+                    </allowed_mis_per_vender>
 
                     <gmail_importer_access_token>
                         <label>Gmail Importer Access Token</label>
                         <type>textarea</type>
                         <fieldset>email_stock_importer</fieldset>
                         <position>8</position>
+                        <note><![CDATA[To genrate token goto menu sales > Dropship > Get Gmail Access Token ]]></note>
                     </gmail_importer_access_token>
-
-                    <gmail_import_last_downloaded>
-                        <label>Gmail Import Last Downloaded</label>
+                    
+                    <last_cron_run>
+                        <label>Gmail Last Cron Run</label>
                         <type>text</type>
                         <fieldset>email_stock_importer</fieldset>
                         <position>9</position>
-                    </gmail_import_last_downloaded>
+                    </last_cron_run>
 
                     <import_inventory_csv_regex>
                         <label>Import Inventory CSV file subject line regex</label>
@@ -86,22 +65,16 @@
                         <fieldset>email_stock_importer</fieldset>
                         <position>80</position>
                     </import_inventory_csv_regex>
+                    
+                    <cron_attachment_mis_count>
+                        <type>hidden</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>90</position>
+                    </cron_attachment_mis_count>
 
                 </fields>
             </vendor>
         </udropship>
-
-        <events>
-            <emailimporter_notifications_before>
-                <observers>
-                    <emailimporter_observer>
-                        <type>singleton</type>
-                        <class>Mowdirect_Emailimporter_Model_Observer</class>
-                        <method>checkMessages</method>
-                    </emailimporter_observer>
-                </observers>
-            </emailimporter_notifications_before>
-        </events>
     </global>
 
     <crontab>
@@ -150,16 +123,70 @@
             </email_importer>
         </routers>
     </frontend>
-
+    
     <admin>
         <routers>
-            <email_importer_admin>
-                <use>admin</use>
+            <adminhtml>
                 <args>
-                    <module>Mowdirect_Emailimporter</module>
-                    <frontName>email_importer_gmail_auth</frontName>
+                    <modules>
+                        <emailimporter after="Mage_Adminhtml">Mowdirect_Emailimporter</emailimporter>
+                    </modules>
                 </args>
-            </email_importer_admin>
+            </adminhtml>
         </routers>
     </admin>
+    <adminhtml>
+        <menu>
+            <sales>
+                <children>
+                    <udropship>
+                        <children>                      
+                            <accesstoken translate="title" module="emailimporter">
+                                <title>Get Gmail Access Token</title>
+                                <action>adminhtml/Emailimporter_index</action>
+                                <sort_order>91</sort_order>
+                            </accesstoken>    
+                        </children>                            
+                    </udropship>
+                                    
+                </children>
+            </sales>
+        </menu>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <sales>
+                            <children>
+                                <udropship>
+                                    
+                                    <children>
+                                        <accesstoken translate="title" module="emailimporter">
+                                            <title>Get Gmail Access Token</title>
+                                        </accesstoken>
+                                                
+                                    </children>
+                                </udropship>
+                            </children>
+                        </sales>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        
+    </adminhtml>
+
+    <menu>
+        <catalog translate="title" module="emailimporter">
+            <title>Catalog</title>
+            <sort_order>30</sort_order>
+            <children>
+                <products translate="title" module="emailimporter">
+                    <title>Manage Products</title>
+                    <action>adminhtml/catalog_product/</action>
+                    <sort_order>0</sort_order>
+                </products>     
+            </children>
+        </catalog>
+    </menu>
 </config>

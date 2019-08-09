@@ -23,14 +23,14 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store> 
                     <fields>
-                        <allowed_misses_per_vendor>
+                        <allowed_mises_per_vendor>
                             <label>How many failures are allowed for vendors</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>                    
-                        </allowed_misses_per_vendor>
+                        </allowed_mises_per_vendor>
 
                         <allowed_failures_email>
                             <label>Who should be sent an email when allowed failures are exceeded</label>
@@ -40,26 +40,6 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>                    
                         </allowed_failures_email>
-
-                        <!-- 
-                        <gmail_service_email_service_account>
-                            <label>Gmail service account credentional json content</label>
-                            <frontend_type>textarea</frontend_type>
-                            <sort_order>1</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                    
-                        </gmail_service_email_service_account>
-
-                        <gmail_service_email_oauth>
-                            <label>Gmail oauth credentional content</label>
-                            <frontend_type>textarea</frontend_type>
-                            <sort_order>1</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                    
-                        </gmail_service_email_oauth>
-                        -->
                         
                         <gmail_client_secret>
                             <label>Gmail Client Secret</label>
