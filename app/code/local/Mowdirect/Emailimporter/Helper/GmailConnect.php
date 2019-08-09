@@ -201,7 +201,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
                 if ('text/plain' == finfo_buffer($f, $csvdata, FILEINFO_MIME_TYPE)) {
                     $file_path = $download_path . '/' . $part->filename;
                     $file = fopen($file_path, "w+");
-					if ( !$fp ) {
+					if ( !$file ) {
 						continue;
 					}  
                     
