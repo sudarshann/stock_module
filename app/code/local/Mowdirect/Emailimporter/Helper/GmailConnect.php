@@ -130,7 +130,11 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
 
     public function download_csv_files_from_message($args = []) {
 		$result = array();
-        $response = array('email_found' => 0, 'has_attachment' => false);
+        $response = array(
+            'email_found' => 0, 
+            'is_file_downloaded' => false, 
+            'invalid_attachment' => false
+        );
         $hit_mail_count = 0;
         $download_path = $this->download_path;
 		
@@ -156,6 +160,9 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         foreach ($messages as $data) {
 
             $message_id = $data->getId();
+            if($hit_mail_count !=0 && $response['is_file_downloaded'] != false){
+                $this->deleteMessage($message_id);
+            }
             $message = $service->users_messages->get('me', $message_id);
 
             if (!empty($args['subject'])) {
@@ -190,7 +197,6 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
                     continue;
                 }
 
-                $response['has_attachment'] = true;
                 $attachment_id = $part->getBody()->getAttachmentId();
 
                 $encoded_string = $service->users_messages_attachments->get('me', $message_id, $attachment_id)->getData();
@@ -211,6 +217,9 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
                     $this->deleteMessage($message_id);
 
                     $response['is_file_downloaded'] = true;
+                }else{
+                    $this->deleteMessage($message_id);
+                    $response['invalid_attachment'] = true;
                 }
             }
             $result[$hit_mail_count]['file_path'] = $file_path;

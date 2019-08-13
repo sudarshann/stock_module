@@ -85,12 +85,25 @@ class Mowdirect_Emailimporter_Model_Observer {
             $this->alert_too_many_email($vendor);
         }
 
-        if (!$response['has_attachment']) {
+        if (!$response['is_file_downloaded']) {
             $this->no_attachment_email($vendor);
+        }
+        
+        if (!$response['invalid_attachment']) {
+            $this->handel_invalid_attachment($vendor);
         }
 
         //is_download_log
         Mage::log('Stock importer: file download ' . $response['is_downloaded']);
+    }
+    
+    public function handel_invalid_attachment($vendor){
+        Mage::log('Stock importer: Invalid Attachment');
+        Mage::helper('emailimporter')->sendMailAction(array(
+            'subject' => $vendor['vendor_name'] . ' Stock Management: Invalid Attachment',
+            'to_mail' => Mage::getStoreConfig('emailimporter/vendor_email/allowed_failures_email'),
+            'message' => $vendor['vendor_name'] . " there is no valid attachment"
+        ));
     }
 
     public function alert_too_many_email($vendor) {
@@ -164,13 +177,15 @@ class Mowdirect_Emailimporter_Model_Observer {
             }
             return $global_value;
         }
+        return $email;
     }
 
     public function get_vendor_allowed_mis($vendor) {
-        $email = Mage::helper('emailimporter')->get_vendor_value($vendor['vendor_id'], 'allowed_mis_per_vender');
-        if (empty($email)) {
+        $allowed_miss = Mage::helper('emailimporter')->get_vendor_value($vendor['vendor_id'], 'allowed_mis_per_vender');
+        if (empty($allowed_miss)) {
             return Mage::getStoreConfig('emailimporter/vendor_email/allowed_mises_per_vendor');
         }
+        return $allowed_miss;
     }
 
 }
