@@ -30,19 +30,19 @@
                 <fields>
 
                     <email_recipient>
-                        <label>Email Recipient To Alert Mis</label>
+                        <label>Email Recipient To Alert Miss</label>
                         <type>text</type>
                         <fieldset>email_stock_importer</fieldset>
                         <position>5</position>
                         <note><![CDATA[Enter Email Recipient to alert him that we have missed email]]></note>
                     </email_recipient>
 
-                    <allowed_mis_per_vender>
+                    <allowed_miss_per_vender>
                         <label>How many failures are allowed for this vendor ?</label>
                         <type>text</type>
                         <fieldset>email_stock_importer</fieldset>
                         <position>6</position>
-                    </allowed_mis_per_vender>
+                    </allowed_miss_per_vender>
 
                     <gmail_importer_access_token>
                         <label>Gmail Importer Access Token</label>
@@ -52,11 +52,19 @@
                         <note><![CDATA[To genrate token goto menu sales > Dropship > Get Gmail Access Token ]]></note>
                     </gmail_importer_access_token>
                     
+                    <gmail_importer_refresh_token>
+                        <label>Gmail Importer Refresh Token</label>
+                        <type>textarea</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>9</position>
+                        <note><![CDATA[To genrate token goto menu sales > Dropship > Get Gmail Access Token ]]></note>
+                    </gmail_importer_refresh_token>
+                    
                     <last_cron_run>
                         <label>Gmail Last Cron Run</label>
                         <type>text</type>
                         <fieldset>email_stock_importer</fieldset>
-                        <position>9</position>
+                        <position>10</position>
                     </last_cron_run>
 
                     <import_inventory_csv_regex>
@@ -66,15 +74,41 @@
                         <position>80</position>
                     </import_inventory_csv_regex>
                     
-                    <cron_attachment_mis_count>
+                    <cron_attachment_miss_count>
                         <type>hidden</type>
                         <fieldset>email_stock_importer</fieldset>
                         <position>90</position>
-                    </cron_attachment_mis_count>
+                    </cron_attachment_miss_count>
+                    
+                    <weekly_miss_count>
+                        <type>hidden</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>91</position>
+                    </weekly_miss_count>
+                    
+                    <weekly_hit_count>
+                        <type>hidden</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>92</position>
+                    </weekly_hit_count>
 
                 </fields>
             </vendor>
         </udropship>
+        <template>
+            <email>
+                <emailimporter_weekly_report_template translate="label" module="emailimporter">
+                    <label>vendor email importer weekly report</label>
+                    <file>emailimporter_weekly_report.html</file>
+                    <type>html</type>
+                </emailimporter_weekly_report_template>
+                <emailimporter_inventory_template translate="label" module="emailimporter">
+                    <label>vendor email importer inventory</label>
+                    <file>emailimporter_inventory.html</file>
+                    <type>html</type>
+                </emailimporter_inventory_template>
+            </email>   
+        </template>
     </global>
 
     <crontab>
@@ -84,9 +118,19 @@
                     <cron_expr>*/5 * * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>emailimporter/observer::handleCron</model>
+                    <model>emailimporter/observer::handleEmailCron</model>
                 </run>
             </mowdirect_emailimportercron>
+            
+            <mowdirect_emailimporter_weekly_repot>
+                <schedule>
+                    <cron_expr>0 0 * * 0</cron_expr>
+                </schedule>
+                <run>
+                    <model>emailimporter/observer::handleWeeklyReportCron</model>
+                </run>
+            </mowdirect_emailimporter_weekly_repot>
+            
         </jobs>        
     </crontab>
 
@@ -189,4 +233,5 @@
             </children>
         </catalog>
     </menu>
+    
 </config>

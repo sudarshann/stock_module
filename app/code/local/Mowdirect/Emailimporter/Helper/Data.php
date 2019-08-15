@@ -25,26 +25,21 @@ class Mowdirect_Emailimporter_Helper_Data extends Mage_Core_Helper_Abstract {
     }
 
     public function sendMailAction($args) {
-
-        $mail = Mage::getModel('core/email');
-
-        $mail->setType('html');
-        $mail->setToName('The Stock Mangement bot');
-        $mail->setBody('Mail Text / Mail Content');
-        if (empty($args['subject']) || empty($args['to_mail']) || empty($args['message'])) {
+        $global_email = Mage::getStoreConfig('emailimporter/vendor_email/allowed_failures_email');
+        
+        if (empty($args['subject']) || empty($args['to_mail']) || empty($args['message']) || empty($args['name'])) {
             return false;
         }
-        $mail->setSubject($args['subject']);
-        $mail->setToEmail($args['to_mail']);
-        $mail->setFromName($args['message']);
-        $mail->setBodyHTML($args['message']);
+        
+        Mage::helper('emailimporter/Email')->sendEmail(
+            'emailimporter_inventory_template', 
+            array('name' => 'Email importer', 'email' => $global_email), 
+            $args['to_mail'], 
+            $args['name'], 
+            $args['subject'], 
+            array('email_output' => $args['message'])
+        );
 
-
-        try {
-            $mail->send();
-        } catch (Exception $e) {
-            print_r($e);
-        }
     }
 
     /* batches */

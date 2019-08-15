@@ -64,6 +64,8 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
     }
 
     public function create_auth_url() {
+        $this->client->setConfig( 'prompt' , 'consent');
+        $this->client->setAccessType('offline');  
         return $this->client->createAuthUrl();
     }
 
@@ -81,6 +83,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
     public function authenticate($args = []) {
         if (!empty($args['code'])) {
             $this->token = $this->client->fetchAccessTokenWithAuthCode($args['code']);
+            
         } elseif (!empty($args['token'])) {
             $this->token = $args['token'];
         } else {
@@ -92,7 +95,11 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         }
 
         $this->client->setAccessToken($this->token);
+          
+        $this->refresh_token = empty($args['refresh_token'])?$args['refresh_token']:$this->client->getRefreshToken();
+ 
         if ($this->client->isAccessTokenExpired()) {
+            
             if ($this->client->getRefreshToken()) {
                 $refresh_token = $this->client->fetchAccessTokenWithRefreshToken($this->client->getRefreshToken());
                 if (!empty($args['vendor_id'])) {
@@ -102,7 +109,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
                 return false;
             }
         }
-        $this->refresh_token = $this->client->getRefreshToken();
+        
         return true;
     }
 
@@ -142,7 +149,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
             $download_path = $args['download_path'];
         }
 
-        $count = 5;
+        $count = 2;
 
         if (!empty($args['count'])) {
             $count = $args['count'];
@@ -215,7 +222,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
                     fclose($file);
 
                     $this->deleteMessage($message_id);
-
+                    $response['file_path'] = $file_path;
                     $response['is_file_downloaded'] = true;
                 }else{
                     $this->deleteMessage($message_id);
@@ -244,7 +251,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
 
             if (strpos($gmail_subject, $filter_keyword) === false) {
 
-                Mage::log('Stock importer: subject line failed to match' . $gmail_subject);
+                Mage::log('Stock importer (info): subject line failed to match' . $gmail_subject);
                 return false;
             }
             return $header->value;
