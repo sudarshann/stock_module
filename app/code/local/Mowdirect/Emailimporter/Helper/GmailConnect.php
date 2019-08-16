@@ -113,13 +113,6 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         return true;
     }
 
-    private function mark_as_read($message_id) {
-        $service = $this->get_gmail_service();
-        $mods = new Google_Service_Gmail_ModifyMessageRequest();
-        $mods->setRemoveLabelIds(array("UNREAD"));
-        $service->users_messages->modify('me', $message_id, $mods);
-    }
-
     private function get_gmail_service() {
         return new Google_Service_Gmail($this->client);
     }
@@ -167,7 +160,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         foreach ($messages as $data) {
 
             $message_id = $data->getId();
-            if($hit_mail_count !=0 && $response['is_file_downloaded'] != false){
+            if((int)$hit_mail_count !== 0 && $response['is_file_downloaded'] != false){
                 $this->deleteMessage($message_id);
             }
             $message = $service->users_messages->get('me', $message_id);
