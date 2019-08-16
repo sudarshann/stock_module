@@ -28,7 +28,7 @@ class Mowdirect_Emailimporter_Model_Observer {
         $email_output = '';
         
         foreach ($vendors as $vendor) {
-            $vendor_email = Mage::helper('emailimporter')->get_vendor_value($vendor['vendor_id'], 'email_recipient');
+            //$vendor_email = Mage::helper('emailimporter')->get_vendor_value($vendor['vendor_id'], 'email_recipient');
             $weekly_hit_count = Mage::helper('emailimporter')->get_vendor_value($vendor['vendor_id'], 'weekly_hit_count');
             $weekly_miss_count = Mage::helper('emailimporter')->get_vendor_value($vendor['vendor_id'], 'weekly_miss_count');
             $email_output .= '<tr><td class="action-content"> vendor : '.$vendor['vendor_name'];
@@ -40,7 +40,7 @@ class Mowdirect_Emailimporter_Model_Observer {
         Mage::helper('emailimporter/Email')->sendEmail(
                 'emailimporter_weekly_report_template', 
                 array('name' => 'Email importer', 'email' => $global_email), 
-                $vendor_email, 
+                $global_email, 
                 $vendor['vendor_name'], 
                 'Weekly Report on Email Importer', 
                 array('email_output' => $email_output)
