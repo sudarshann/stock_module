@@ -5,8 +5,10 @@ use function GuzzleHttp\json_encode;
 class Mowdirect_Emailimporter_IndexController extends Mage_Core_Controller_Front_Action {
     
     public function indexAction(){
-        var_dump(Mage::getModel('emailimporter/Observer')->handleEmailCron());
-        die();
+        // This section is used only to debug the cron functionality manually by url.
+        // Uncomment only when testing.
+        // var_dump(Mage::getModel('emailimporter/Observer')->handleEmailCron());
+        // die();
     }
     
     public function gmailredirectAction() {
