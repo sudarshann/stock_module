@@ -17,7 +17,7 @@ class Mowdirect_Emailimporter_IndexController extends Mage_Core_Controller_Front
 
         if (empty($_GET['code'])) {
             header("Location: " . $gmail->create_auth_url());
-            die;
+            die();
         }
 
         $gmail->authenticate(['code' => $_GET['code']]);
@@ -38,6 +38,6 @@ class Mowdirect_Emailimporter_IndexController extends Mage_Core_Controller_Front
             <?php echo $vendor_refresh_token; ?>
         </p>
         <?php
-        die();
+        return;
     }
 }
