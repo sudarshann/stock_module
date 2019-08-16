@@ -160,7 +160,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         foreach ($messages as $data) {
 
             $message_id = $data->getId();
-            if((int)$hit_mail_count !== 0 && $response['is_file_downloaded'] != false){
+            if((int)$hit_mail_count !== 0 && $response['is_file_downloaded'] !== false){
                 $this->deleteMessage($message_id);
             }
             $message = $service->users_messages->get('me', $message_id);
