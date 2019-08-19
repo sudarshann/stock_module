@@ -1,0 +1,67 @@
+<config>
+    <tabs>
+        <emailimporterconfig translate="label" module="emailimporter">
+            <label>Stock Batch Import Email Processing</label>
+            <sort_order>99999</sort_order>
+        </emailimporterconfig>
+    </tabs>
+    <sections>
+        <emailimporter translate="label" module="emailimporter">
+            <label>email importer Config</label>
+            <tab>emailimporterconfig</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>   
+            <groups>
+                <vendor_email translate="label">
+                    <label>Vendor Email Config Fields</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store> 
+                    <fields>
+                        <allowed_misses_per_vendor>
+                            <label>How many failures are allowed for vendors</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </allowed_misses_per_vendor>
+
+                        <allowed_failures_email>
+                            <label>Who should be sent an email when allowed failures are exceeded</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </allowed_failures_email>
+                        
+                        <gmail_client_secret>
+                            <label>Gmail Client Secret</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </gmail_client_secret>
+
+                        <gmail_client_id>
+                            <label>Gmail Client Id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </gmail_client_id>
+
+                    </fields>                
+                </vendor_email>
+            </groups>            
+        </emailimporter>
+    </sections>     
+</config>
