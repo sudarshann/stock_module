@@ -7,7 +7,7 @@
     </tabs>
     <sections>
         <emailimporter translate="label" module="emailimporter">
-            <label>email importer Config</label>
+            <label>Email Importer Config</label>
             <tab>emailimporterconfig</tab>
             <frontend_type>text</frontend_type>
             <sort_order>1000</sort_order>
