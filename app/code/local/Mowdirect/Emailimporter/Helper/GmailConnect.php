@@ -1,15 +1,9 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-require_once(Mage::getBaseDir('lib').'/google-client-api/autoload.php');
-
 class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstract {
 
     private $token;
     private $client;
-    private $redirectUri = 'http://127.0.0.1/index.php/email_importer/index/gmailredirect/';
     private $client_secret = '';
     private $client_id = '';
     private $app_name = 'Import Inventry Gmail API';
@@ -32,9 +26,9 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         }
 
         if (!empty($args['redirect_uri'])) {
-            $this->redirectUri = $args['redirect_uri'];
+            $redirect_uri = $args['redirect_uri'];
         } else {
-            $this->redirectUri = Mage::app()->getStore()->getUrl('email_importer/index/gmailredirect');
+            $redirect_uri = Mage::app()->getStore()->getUrl('email_importer/index/gmailredirect');
         }
 
         if (!empty($args['app_name'])) {
@@ -52,7 +46,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         $client = new Google_Client();
         $client->setApplicationName($this->app_name);
         $client->setScopes($this->scope);
-        $client->setRedirectUri($this->redirectUri);
+        $client->setRedirectUri($redirect_uri);
         $client->setClientSecret($this->client_secret);
         $client->setClientId($this->client_id);
         $this->client = $client;
@@ -96,7 +90,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
 
         $this->client->setAccessToken($this->token);
           
-        $this->refresh_token = empty($args['refresh_token']) ? $args['refresh_token'] : $this->client->getRefreshToken();
+        $this->refresh_token = empty($args['refresh_token']) ? $this->client->getRefreshToken() : $args['refresh_token'];
  
         if ($this->client->isAccessTokenExpired()) {
             
