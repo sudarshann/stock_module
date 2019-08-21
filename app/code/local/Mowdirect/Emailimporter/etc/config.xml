@@ -1,30 +1,237 @@
 <?xml version="1.0"?>
 <config>
-  <modules>
-    <Mowdirect_Emailimporter>
-      <version>0.1.0</version>
-    </Mowdirect_Emailimporter>
-  </modules>
-  <frontend>
-    <routers>
-      <email_importer>
-        <use>standard</use>
-        <args>
-          <module>Mowdirect_Emailimporter</module>
-          <frontName>email_importer</frontName>
-        </args>
-      </email_importer>
-    </routers>
-  </frontend>
-<admin>
-  <routers>
-    <email_importer>
-     <use>admin</use>
-     <args>
-      <module>Mowdirect_Emailimporter</module>
-      <frontName>admin_email_importer</frontName>
-     </args>
-    </email_importer>
-  </routers>
-</admin>
+    <modules>
+        <Mowdirect_Emailimporter>
+            <version>0.1.0</version>
+        </Mowdirect_Emailimporter>
+    </modules>
+
+    <global>
+        <helpers>
+            <emailimporter>
+                <class>Mowdirect_Emailimporter_Helper</class>
+            </emailimporter>
+        </helpers> 
+
+        <models>
+            <emailimporter>
+                <class>Mowdirect_Emailimporter_Model</class>
+            </emailimporter>
+        </models>
+
+        <udropship>
+            <vendor>
+                <fieldsets>
+                    <email_stock_importer>
+                        <legend>Email Stock Importer</legend>
+                        <position>05</position>
+                    </email_stock_importer>
+                </fieldsets>
+                <fields>
+
+                    <email_recipient>
+                        <label>Email Recipient To Alert Miss</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>5</position>
+                        <note><![CDATA[Enter Email Recipient to alert him that we have missed email]]></note>
+                    </email_recipient>
+
+                    <allowed_miss_per_vender>
+                        <label>How many failures are allowed for this vendor ?</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>6</position>
+                    </allowed_miss_per_vender>
+
+                    <gmail_importer_access_token>
+                        <label>Gmail Importer Access Token</label>
+                        <type>textarea</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>8</position>
+                        <note><![CDATA[To genrate token goto menu sales > Dropship > Get Gmail Access Token ]]></note>
+                    </gmail_importer_access_token>
+                    
+                    <gmail_importer_refresh_token>
+                        <label>Gmail Importer Refresh Token</label>
+                        <type>textarea</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>9</position>
+                        <note><![CDATA[To genrate token goto menu sales > Dropship > Get Gmail Access Token ]]></note>
+                    </gmail_importer_refresh_token>
+                    
+                    <last_cron_run>
+                        <label>Gmail Last Cron Run</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>10</position>
+                    </last_cron_run>
+
+                    <import_inventory_csv_regex>
+                        <label>Import Inventory CSV file subject line regex</label>
+                        <type>text</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>80</position>
+                    </import_inventory_csv_regex>
+                    
+                    <cron_attachment_miss_count>
+                        <type>hidden</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>90</position>
+                    </cron_attachment_miss_count>
+                    
+                    <weekly_miss_count>
+                        <type>hidden</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>91</position>
+                    </weekly_miss_count>
+                    
+                    <weekly_hit_count>
+                        <type>hidden</type>
+                        <fieldset>email_stock_importer</fieldset>
+                        <position>92</position>
+                    </weekly_hit_count>
+
+                </fields>
+            </vendor>
+        </udropship>
+        <template>
+            <email>
+                <emailimporter_weekly_report_template translate="label" module="emailimporter">
+                    <label>vendor email importer weekly report</label>
+                    <file>emailimporter_weekly_report.html</file>
+                    <type>html</type>
+                </emailimporter_weekly_report_template>
+                <emailimporter_inventory_template translate="label" module="emailimporter">
+                    <label>vendor email importer inventory</label>
+                    <file>emailimporter_inventory.html</file>
+                    <type>html</type>
+                </emailimporter_inventory_template>
+            </email>   
+        </template>
+    </global>
+
+    <crontab>
+        <jobs>
+            <mowdirect_emailimportercron>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>emailimporter/observer::handleEmailCron</model>
+                </run>
+            </mowdirect_emailimportercron>
+            
+            <mowdirect_emailimporter_weekly_repot>
+                <schedule>
+                    <cron_expr>0 0 * * 0</cron_expr>
+                </schedule>
+                <run>
+                    <model>emailimporter/observer::handleWeeklyReportCron</model>
+                </run>
+            </mowdirect_emailimporter_weekly_repot>
+            
+        </jobs>        
+    </crontab>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <emailimporter>
+                                            <title>Store email importer Module Section</title>
+                                        </emailimporter>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    
+    <frontend>
+        <routers>
+            <email_importer>
+                <use>standard</use>
+                <args>
+                    <module>Mowdirect_Emailimporter</module>
+                    <frontName>email_importer</frontName>
+                </args>
+            </email_importer>
+        </routers>
+    </frontend>
+    
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <emailimporter after="Mage_Adminhtml">Mowdirect_Emailimporter</emailimporter>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <menu>
+            <sales>
+                <children>
+                    <udropship>
+                        <children>                      
+                            <accesstoken translate="title" module="emailimporter">
+                                <title>Get Gmail Access Token</title>
+                                <action>adminhtml/Emailimporter_index</action>
+                                <sort_order>91</sort_order>
+                            </accesstoken>    
+                        </children>                            
+                    </udropship>
+                                    
+                </children>
+            </sales>
+        </menu>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <sales>
+                            <children>
+                                <udropship>
+                                    
+                                    <children>
+                                        <accesstoken translate="title" module="emailimporter">
+                                            <title>Get Gmail Access Token</title>
+                                        </accesstoken>
+                                                
+                                    </children>
+                                </udropship>
+                            </children>
+                        </sales>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        
+    </adminhtml>
+
+    <menu>
+        <catalog translate="title" module="emailimporter">
+            <title>Catalog</title>
+            <sort_order>30</sort_order>
+            <children>
+                <products translate="title" module="emailimporter">
+                    <title>Manage Products</title>
+                    <action>adminhtml/catalog_product/</action>
+                    <sort_order>0</sort_order>
+                </products>     
+            </children>
+        </catalog>
+    </menu>
+    
 </config>

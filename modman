@@ -3,3 +3,6 @@
 app/code/local/Mowdirect/Emailimporter            app/code/local/Mowdirect/Emailimporter
 # app/etc
 app/etc/modules/Mowdirect_Emailimporter.xml            app/etc/modules/Mowdirect_Emailimporter.xml
+# app/locale
+app/locale/en_US/template/emailimporter_inventory.html            app/locale/en_US/template/emailimporter_inventory.html
+app/locale/en_US/template/emailimporter_weekly_report.html            app/locale/en_US/template/emailimporter_weekly_report.html

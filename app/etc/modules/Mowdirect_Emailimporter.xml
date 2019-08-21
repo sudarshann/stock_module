@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-      <Mowdirect_Importer>
+      <Mowdirect_Emailimporter>
          <active>true</active>
          <codePool>local</codePool>
-      </Mowdirect_Importer>
+      </Mowdirect_Emailimporter>
     </modules>
 </config>
