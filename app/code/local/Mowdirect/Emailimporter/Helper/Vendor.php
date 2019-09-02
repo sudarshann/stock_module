@@ -1,5 +1,4 @@
 <?php
-require_once(Mage::getBaseDir('lib').'/google-client-api/autoload.php');
 
 class Mowdirect_Emailimporter_Helper_Vendor extends Mage_Core_Helper_Abstract {
     
@@ -107,12 +106,12 @@ class Mowdirect_Emailimporter_Helper_Vendor extends Mage_Core_Helper_Abstract {
     public function alert_too_many_email($vendor) {
         Mage::log('Stock importer (error): Too many email found for :'.$vendor['vendor_name']);
 
-        $message = "<td><h3>Dear Administrator</h3>,</br>For the Vendor ".$vendor['vendor_name'];
+        $message = "<td><h3>Dear Administrator</h3>,</br><p>For the Vendor ".$vendor['vendor_name'];
         $message .= " when we attempted to download stock, we found that there were more emails";
         $message .= "in the Gmail inbox that we expected. This suggests that the vendor is sending";
         $message .= "stock updates more frequently than is configured in their preferences within magento.";
         $message .= "Please check with the vendor with what frequency they are sending them and amend the";
-        $message .= "cron schedule in Magento accordingly.</td>";
+        $message .= "cron schedule in Magento accordingly.</p></td>";
 
         Mage::helper('emailimporter')->sendMailAction(array(
             'subject' => $vendor['vendor_name'].' Stock Management: Too many emails arrived in allotted time-frame',
@@ -129,7 +128,7 @@ class Mowdirect_Emailimporter_Helper_Vendor extends Mage_Core_Helper_Abstract {
         Mage::helper('emailimporter')->sendMailAction(array(
             'subject' => 'Stock Management: Canot connect to gmail',
             'to_mail' => $this->get_vendor_email($vendor),
-            'message' => '<td><p>Email auth field on gmail-api needs correct auth on dropship -> vendor for vendor name :'.$vendor['vendor_name'].'<td><p>',
+            'message' => '<td><p>Email auth field on gmail-api needs correct auth on dropship -> vendor for vendor name :'.$vendor['vendor_name'].'</p><td>',
             'name' => $vendor['vendor_name']
         ));
     }
@@ -158,7 +157,7 @@ class Mowdirect_Emailimporter_Helper_Vendor extends Mage_Core_Helper_Abstract {
         Mage::helper('emailimporter')->sendMailAction(array(
             'subject' => 'Stock Management: Exceeding miss email',
             'to_mail' => $this->get_vendor_email($vendor),
-            'message' => '<td><p>No email and csv Attachment found on youremail '.$vendor['vendor_name'].'</td></p>',
+            'message' => '<td><p>No email and csv Attachment found on youremail '.$vendor['vendor_name'].'</p></td>',
             'name' => $vendor['vendor_name']
         ));
         Mage::helper('emailimporter')->set_vendor_value($vendor['vendor_id'], 'cron_attachment_miss_count', '1');
