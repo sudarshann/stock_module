@@ -1,7 +1,5 @@
 <?php 
 
-use function GuzzleHttp\json_encode;
-
 class Mowdirect_Emailimporter_IndexController extends Mage_Core_Controller_Front_Action {
     
     public function indexAction() {
