@@ -13,14 +13,15 @@ class Mowdirect_Emailimporter_Helper_Email extends Mage_Core_Model_Email_Templat
      */
     public function sendEmail($templateId, $sender, $email, $name, $subject, $params = array())
     {
-        $this->setDesignConfig(array('area' => 'frontend', 'store' => $this->getDesignConfig()->getStore()))
-            ->setTemplateSubject($subject)
-            ->sendTransactional(
-                $templateId,
-                $sender,
-                $email,
-                $name,
-                $params
-        );
+      $this->setDesignConfig(array('area' => 'frontend', 'store' => $this->getDesignConfig()->getStore()))
+          ->setTemplateSubject($subject)
+          ->sendTransactional(
+              $templateId,
+              $sender,
+              $email,
+              $name,
+              $params
+      );
+
     }
 }

@@ -1,9 +1,13 @@
 <?php
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstract {
 
     private $token;
     private $client;
+    private $redirectUri = 'http://127.0.0.1/index.php/email_importer/index/gmailredirect/';
     private $client_secret = '';
     private $client_id = '';
     private $app_name = 'Import Inventry Gmail API';
@@ -23,12 +27,13 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
             $this->client_secret = $args['client_secret'];
         } else {
             $this->client_secret = Mage::getStoreConfig('emailimporter/vendor_email/gmail_client_secret');
+            //$this->client_secret = 'http://127.0.0.1/index.php/email_importer/index/gmailredirect/';
         }
 
         if (!empty($args['redirect_uri'])) {
-            $redirect_uri = $args['redirect_uri'];
+            $this->redirectUri = $args['redirect_uri'];
         } else {
-            $redirect_uri = Mage::app()->getStore()->getUrl('email_importer/index/gmailredirect');
+            $this->redirectUri = Mage::app()->getStore()->getUrl('email_importer/index/gmailredirect');
         }
 
         if (!empty($args['app_name'])) {
@@ -46,7 +51,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         $client = new Google_Client();
         $client->setApplicationName($this->app_name);
         $client->setScopes($this->scope);
-        $client->setRedirectUri($redirect_uri);
+        $client->setRedirectUri($this->redirectUri);
         $client->setClientSecret($this->client_secret);
         $client->setClientId($this->client_id);
         $this->client = $client;
@@ -74,7 +79,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         return false;
     }
 
-    public function authenticate($args = []) {
+    public function authenticate($args = [], $update_vendor_varien) {
         if (!empty($args['code'])) {
             $this->token = $this->client->fetchAccessTokenWithAuthCode($args['code']);
             
@@ -90,14 +95,14 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
 
         $this->client->setAccessToken($this->token);
           
-        $this->refresh_token = empty($args['refresh_token']) ? $this->client->getRefreshToken() : $args['refresh_token'];
+        $this->refresh_token = empty($args['refresh_token']) ? $args['refresh_token'] : $this->client->getRefreshToken();
  
         if ($this->client->isAccessTokenExpired()) {
             
             if ($this->client->getRefreshToken()) {
                 $refresh_token = $this->client->fetchAccessTokenWithRefreshToken($this->client->getRefreshToken());
                 if (!empty($args['vendor_id'])) {
-                    Mage::helper('emailimporter')->set_vendor_value($args['vendor_id'], 'gmail_importer_refresh_token', $refresh_token);
+                    $update_vendor_varien->setGmailImporterRefreshToken($refresh_token);
                 }
             } else {
                 return false;
