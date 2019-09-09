@@ -1,7 +1,5 @@
 <?php
 
-use function GuzzleHttp\json_encode;
-
 class Mowdirect_Emailimporter_IndexController extends Mage_Core_Controller_Front_Action {
 
     public function indexAction() {
@@ -9,11 +7,6 @@ class Mowdirect_Emailimporter_IndexController extends Mage_Core_Controller_Front
         // Uncomment only when testing.
         // var_dump(Mage::getModel('emailimporter/Observer')->handleEmailCron());
         // die();
-        //$vendors = Mage::getModel('udropship/vendor')->getCollection()->getData();
-        $vendors = Mage::getModel('emailimporter/Observer')->handleEmailCron();
-        echo '<pre>';
-        var_dump($vendors);
-        echo '</pre>';
 
     }
 

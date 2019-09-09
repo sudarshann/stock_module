@@ -48,7 +48,6 @@ class Mowdirect_Emailimporter_Helper_Vendor extends Mage_Core_Helper_Abstract {
         }
 
         Mage::log('Stock importer (info): Processing Email download attachment for : '.$vendor['vendor_name']);
-        $response = array();
 
         $gmail_api = Mage::helper('emailimporter/GmailConnect');
         $gmail_api->set_config();
