@@ -38,8 +38,7 @@ class Mowdirect_Emailimporter_Model_Observer {
         $global_email = Mage::getStoreConfig('emailimporter/vendor_email/allowed_failures_email');
         $vendors = Mage::helper('emailimporter/Vendor')->get_vendors();
 
-        $email_output = '<table>';
-        $email_output .= '<thead><th>Vendor</th><th>Hits</th><th>Misses</th></thead>';
+        $email_output = '<thead><th>Vendor</th><th>Hits</th><th>Misses</th></thead>';
         $email_output .= '<tbody>';
         foreach ($vendors as $vendor) {
             $email_output .= '<tr>';
@@ -49,7 +48,6 @@ class Mowdirect_Emailimporter_Model_Observer {
             $email_output .= '</tr>';
         }
         $email_output .= '</tbody>';
-        $email_output = '</table>';
 
         Mage::helper('emailimporter/Email')->sendEmail(
                 'emailimporter_weekly_report_template',
