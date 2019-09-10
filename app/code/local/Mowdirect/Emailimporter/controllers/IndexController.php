@@ -1,14 +1,15 @@
-<?php 
+<?php
 
 class Mowdirect_Emailimporter_IndexController extends Mage_Core_Controller_Front_Action {
-    
+
     public function indexAction() {
         // This section is used only to debug the cron functionality manually by url.
         // Uncomment only when testing.
         // var_dump(Mage::getModel('emailimporter/Observer')->handleEmailCron());
         // die();
+
     }
-    
+
     public function gmailredirectAction() {
         $gmail = Mage::helper('emailimporter/GmailConnect');
         $gmail->set_config();
@@ -19,7 +20,7 @@ class Mowdirect_Emailimporter_IndexController extends Mage_Core_Controller_Front
         }
 
         $gmail->authenticate(['code' => $_GET['code']]);
-        
+
         //$access_token = $gmail->get_token_by_code($_GET['code']);
         $vendor_accesstoken = json_encode($gmail->get_token());
         $vendor_refresh_token = $gmail->get_refresh_token();

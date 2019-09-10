@@ -22,5 +22,6 @@ class Mowdirect_Emailimporter_Helper_Email extends Mage_Core_Model_Email_Templat
                 $name,
                 $params
         );
+
     }
 }
