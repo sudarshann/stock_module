@@ -8,7 +8,7 @@ class Mowdirect_Emailimporter_Model_Observer {
         $vendors = Mage::helper('emailimporter/Vendor')->get_vendors();
         $vendor_model = Mage::getModel('udropship/vendor');
 
-        $vendor_to_update = new Varien_Data_Collection();
+        $vendors_to_update = new Varien_Data_Collection();
         foreach ($vendors as $key => $vendor) {
             Mage::log('Stock importer (info):  import inventry started for : '.$vendor['vendor_name']);
 
@@ -23,11 +23,11 @@ class Mowdirect_Emailimporter_Model_Observer {
 
             Mage::log('Stock importer (info):  import inventry end for : '.$vendor['vendor_name']);
 
-            $vendor_to_update->addItem($update_vendor_varien);
+            $vendors_to_update->addItem($update_vendor_varien);
 
         }
 
-        Mage::helper('emailimporter/Vendor')->update_bluk_vendor($vendor_model, $vendor_to_update->toArray());
+        Mage::helper('emailimporter/Vendor')->update_bluk_vendor($vendor_model, $vendors_to_update->toArray());
 
         Mage::log('Stock importer (info): cron ended ');
     }

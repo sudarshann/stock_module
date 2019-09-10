@@ -1,13 +1,9 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstract {
 
     private $token;
     private $client;
-    private $redirectUri = 'http://127.0.0.1/index.php/email_importer/index/gmailredirect/';
     private $client_secret = '';
     private $client_id = '';
     private $app_name = 'Import Inventry Gmail API';
@@ -27,13 +23,12 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
             $this->client_secret = $args['client_secret'];
         } else {
             $this->client_secret = Mage::getStoreConfig('emailimporter/vendor_email/gmail_client_secret');
-            //$this->client_secret = 'http://127.0.0.1/index.php/email_importer/index/gmailredirect/';
         }
 
         if (!empty($args['redirect_uri'])) {
-            $this->redirectUri = $args['redirect_uri'];
+            $redirectUri = $args['redirect_uri'];
         } else {
-            $this->redirectUri = Mage::app()->getStore()->getUrl('email_importer/index/gmailredirect');
+            $redirectUri = Mage::app()->getStore()->getUrl('email_importer/index/gmailredirect');
         }
 
         if (!empty($args['app_name'])) {
@@ -51,7 +46,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         $client = new Google_Client();
         $client->setApplicationName($this->app_name);
         $client->setScopes($this->scope);
-        $client->setRedirectUri($this->redirectUri);
+        $client->setRedirectUri($redirectUri);
         $client->setClientSecret($this->client_secret);
         $client->setClientId($this->client_id);
         $this->client = $client;
@@ -79,7 +74,7 @@ class Mowdirect_Emailimporter_Helper_GmailConnect extends Mage_Core_Helper_Abstr
         return false;
     }
 
-    public function authenticate($args = [], $update_vendor_varien) {
+    public function authenticate($args = [], $update_vendor_varien = null) {
         if (!empty($args['code'])) {
             $this->token = $this->client->fetchAccessTokenWithAuthCode($args['code']);
             
