@@ -24,8 +24,10 @@ class Mowdirect_Emailimporter_Model_Observer {
             Mage::log('Stock importer (info):  import inventry end for : '.$vendor['vendor_name']);
 
             $vendors_to_update->addItem($update_vendor_varien);
+            unset($update_vendor_varien);
 
         }
+        unset($vendors);
 
         Mage::helper('emailimporter/Vendor')->update_bluk_vendor($vendor_model, $vendors_to_update->toArray());
 
