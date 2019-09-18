@@ -29,6 +29,9 @@ class Mowdirect_Emailimporter_Model_Observer {
 
         Mage::helper('emailimporter/Vendor')->update_bluk_vendor($vendor_model, $vendors_to_update->toArray());
 
+        unset($vendors);
+        unset($vendors_to_update);
+        
         Mage::log('Stock importer (info): cron ended ');
     }
 
