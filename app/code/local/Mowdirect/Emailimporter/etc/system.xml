@@ -13,7 +13,7 @@
             <sort_order>1000</sort_order>
             <show_in_default>1</show_in_default>
             <show_in_website>1</show_in_website>
-            <show_in_store>1</show_in_store>   
+            <show_in_store>1</show_in_store>
             <groups>
                 <vendor_email translate="label">
                     <label>Vendor Email Config Fields</label>
@@ -21,7 +21,7 @@
                     <sort_order>1</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store> 
+                    <show_in_store>1</show_in_store>
                     <fields>
                         <allowed_misses_per_vendor>
                             <label>How many failures are allowed for vendors</label>
@@ -29,7 +29,7 @@
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                    
+                            <show_in_store>1</show_in_store>
                         </allowed_misses_per_vendor>
 
                         <allowed_failures_email>
@@ -38,16 +38,16 @@
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                    
+                            <show_in_store>1</show_in_store>
                         </allowed_failures_email>
-                        
+
                         <gmail_client_secret>
                             <label>Gmail Client Secret</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                    
+                            <show_in_store>1</show_in_store>
                         </gmail_client_secret>
 
                         <gmail_client_id>
@@ -56,12 +56,12 @@
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                    
+                            <show_in_store>1</show_in_store>
                         </gmail_client_id>
 
-                    </fields>                
+                    </fields>
                 </vendor_email>
-            </groups>            
+            </groups>
         </emailimporter>
-    </sections>     
+    </sections>
 </config>
